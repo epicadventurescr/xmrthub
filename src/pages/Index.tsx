@@ -130,6 +130,15 @@ const Index = () => {
             Next Step
           </Button>
         </div>
+
+        <footer className="mt-8 pt-4 border-t border-green-500/20">
+          <a
+            href="mailto:xmrtsolutions@gmail.com"
+            className="font-['Press_Start_2P'] text-xs text-green-400 hover:text-green-300 transition-colors"
+          >
+            Contact Support
+          </a>
+        </footer>
       </div>
     </div>
   );
