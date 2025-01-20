@@ -3,37 +3,49 @@ import { StepIndicator } from "@/components/StepIndicator";
 import { StepCard } from "@/components/StepCard";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { Copy } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const steps = [
   {
     title: "Install Termux",
-    description:
-      "First, we'll guide you through installing Termux, a powerful terminal emulator for Android.",
+    description: "Get Termux from F-Droid store",
     content: (
-      <div className="space-y-4">
-        <ol className="list-decimal list-inside space-y-2 text-gray-600">
-          <li>Open the Google Play Store on your Android device</li>
-          <li>Search for "Termux"</li>
-          <li>Install the official Termux app</li>
-          <li>Open Termux after installation is complete</li>
+      <div className="space-y-2 text-gray-600 font-mono">
+        <ol className="list-decimal list-inside space-y-1">
+          <li>Open F-Droid store</li>
+          <li>Search "Termux"</li>
+          <li>Tap Install</li>
+          <li>Open Termux</li>
         </ol>
       </div>
     ),
   },
   {
-    title: "Step 2",
-    description: "Configure your development environment.",
-    content: <div className="text-gray-600">Configuration steps will go here.</div>,
+    title: "Install Python",
+    description: "Copy and run this command",
+    content: (
+      <div className="relative font-mono bg-black/90 text-green-500 p-3 rounded-md">
+        <code className="block">pkg install python</code>
+      </div>
+    ),
+    command: "pkg install python",
   },
   {
-    title: "Step 3",
-    description: "Start building your dApp.",
-    content: <div className="text-gray-600">Final steps will go here.</div>,
+    title: "Install MaticDapp",
+    description: "Copy and run this command",
+    content: (
+      <div className="relative font-mono bg-black/90 text-green-500 p-3 rounded-md">
+        <code className="block whitespace-pre-wrap">curl -L https://gist.github.com/DevGruGold/56cb10f2c66c1f48b070398051433c51/raw/ -o install_maticdapp_v2.py && python3 install_maticdapp_v2.py</code>
+      </div>
+    ),
+    command: "curl -L https://gist.github.com/DevGruGold/56cb10f2c66c1f48b070398051433c51/raw/ -o install_maticdapp_v2.py && python3 install_maticdapp_v2.py",
   },
 ];
 
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const { toast } = useToast();
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
@@ -47,25 +59,34 @@ const Index = () => {
     }
   };
 
+  const handleCopy = (command: string) => {
+    navigator.clipboard.writeText(command);
+    toast({
+      title: "Copied!",
+      description: "Command copied to clipboard",
+      duration: 2000,
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="container max-w-3xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+      <div className="container max-w-md mx-auto px-4 py-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-6"
         >
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            MaticDapps Launcher
+          <h1 className="text-2xl font-bold font-['Press_Start_2P'] text-green-500 mb-2">
+            MaticDapps
           </h1>
-          <p className="text-lg text-gray-600">
-            Build your dApp in three simple steps
+          <p className="text-sm font-mono text-green-400">
+            Build your dApp in 3 steps
           </p>
         </motion.div>
 
         <StepIndicator currentStep={currentStep} totalSteps={steps.length} />
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           <AnimatePresence mode="wait">
             {steps.map((step, index) => (
               <div key={index} className={index !== currentStep ? "hidden" : ""}>
@@ -75,25 +96,36 @@ const Index = () => {
                   isActive={index === currentStep}
                 >
                   {step.content}
+                  {step.command && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-2 font-mono text-xs bg-green-500/20 border-green-500/50 hover:bg-green-500/30"
+                      onClick={() => handleCopy(step.command!)}
+                    >
+                      <Copy className="w-3 h-3 mr-1" />
+                      Copy Command
+                    </Button>
+                  )}
                 </StepCard>
               </div>
             ))}
           </AnimatePresence>
         </div>
 
-        <div className="flex justify-between mt-8">
+        <div className="flex justify-between mt-4">
           <Button
             variant="outline"
             onClick={handleBack}
             disabled={currentStep === 0}
-            className="transition-all duration-300 hover:bg-gray-50"
+            className="font-mono text-sm bg-transparent border-green-500/50 hover:bg-green-500/20"
           >
             Back
           </Button>
           <Button
             onClick={handleNext}
             disabled={currentStep === steps.length - 1}
-            className="bg-matic hover:bg-matic-dark transition-all duration-300"
+            className="font-mono text-sm bg-green-500 hover:bg-green-600"
           >
             Next Step
           </Button>
