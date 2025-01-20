@@ -9,13 +9,21 @@ import { useToast } from "@/hooks/use-toast";
 const steps = [
   {
     title: "Install Termux",
-    description: "Get Termux from F-Droid store",
+    description: "Get Termux from Google Play Store",
     content: (
       <div className="space-y-2 text-gray-600 font-mono">
         <ol className="list-decimal list-inside space-y-1">
-          <li>Open F-Droid store</li>
-          <li>Search "Termux"</li>
-          <li>Tap Install</li>
+          <li>Open Google Play Store</li>
+          <li>
+            <a 
+              href="https://play.google.com/store/apps/details?id=com.termux" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-green-500 hover:text-green-400 underline"
+            >
+              Click here to install Termux
+            </a>
+          </li>
           <li>Open Termux</li>
         </ol>
       </div>
@@ -23,10 +31,13 @@ const steps = [
   },
   {
     title: "Install Python",
-    description: "Copy and run this command",
+    description: "Copy and run this command (press Y when prompted)",
     content: (
-      <div className="relative font-mono bg-black/90 text-green-500 p-3 rounded-md">
-        <code className="block">pkg install python</code>
+      <div className="space-y-2">
+        <div className="relative font-mono bg-black/90 text-green-500 p-3 rounded-md">
+          <code className="block">pkg install python</code>
+        </div>
+        <p className="text-xs text-green-400/80 italic">Note: Press Y when prompted. This may take a few minutes to complete.</p>
       </div>
     ),
     command: "pkg install python",
