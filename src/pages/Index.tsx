@@ -342,6 +342,8 @@ const Index = () => {
           </p>
         </motion.div>
 
+        {platform === "pc" && <PoolStats />}
+
         <StepIndicator currentStep={currentStep} totalSteps={steps.length} />
 
         <div className="space-y-4">
