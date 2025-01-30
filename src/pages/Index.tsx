@@ -166,6 +166,52 @@ const translations = {
         command: "curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py",
       },
     ],
+    pcSteps: [
+      {
+        title: "Descargar XMRig",
+        description: "Obtén la última versión de XMRig",
+        content: (
+          <div className="space-y-2 text-gray-600 font-mono">
+            <ol className="list-decimal list-inside space-y-1">
+              <li>
+                <a 
+                  href="https://xmrig.com/download" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-400 underline"
+                >
+                  Haz clic aquí para descargar XMRig
+                </a>
+              </li>
+            </ol>
+          </div>
+        ),
+      },
+      {
+        title: "Configurar XMRig",
+        description: "Edita el archivo config.json",
+        content: (
+          <div className="space-y-2">
+            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+              <p>Abre config.json en un editor de texto y actualiza:</p>
+              <ul className="list-disc list-inside mt-2">
+                <li>Configuración del pool</li>
+                <li>Dirección de la billetera</li>
+              </ul>
+            </div>
+          </div>
+        ),
+      },
+      {
+        title: "Iniciar XMRig",
+        description: "Comienza a minar",
+        content: (
+          <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+            <p>Inicia la aplicación de minería para comenzar</p>
+          </div>
+        ),
+      },
+    ],
     back: "Atrás",
     next: "Siguiente",
     copyCommand: "Copiar Comando",
