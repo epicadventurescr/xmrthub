@@ -79,6 +79,7 @@ const translations = {
             </ol>
           </div>
         ),
+        command: "" // Added empty command
       },
       {
         title: "Configure XMRig",
@@ -116,6 +117,7 @@ const translations = {
             </div>
           </div>
         ),
+        command: "" // Added empty command
       },
       {
         title: "Launch XMRig",
@@ -125,6 +127,7 @@ const translations = {
             <p>Launch the mining application to begin</p>
           </div>
         ),
+        command: "" // Added empty command
       },
     ],
     back: "Back",
@@ -209,6 +212,7 @@ const translations = {
             </ol>
           </div>
         ),
+        command: "" // Added empty command
       },
       {
         title: "Configurar XMRig",
@@ -246,6 +250,7 @@ const translations = {
             </div>
           </div>
         ),
+        command: "" // Added empty command
       },
       {
         title: "Iniciar XMRig",
@@ -255,6 +260,7 @@ const translations = {
             <p>Inicia la aplicación de minería para comenzar</p>
           </div>
         ),
+        command: "" // Added empty command
       },
     ],
     back: "Atrás",
@@ -405,4 +411,3 @@ const Index = () => {
 };
 
 export default Index;
-
