@@ -6,6 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { motion, AnimatePresence } from "framer-motion";
 import { Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { PoolStats } from "@/components/PoolStats";
 
 const translations = {
   en: {
@@ -84,12 +85,34 @@ const translations = {
         description: "Edit the config.json file",
         content: (
           <div className="space-y-2">
-            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
-              <p>Open config.json in a text editor and update:</p>
-              <ul className="list-disc list-inside mt-2">
-                <li>Pool settings</li>
-                <li>Wallet address</li>
-              </ul>
+            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md space-y-4">
+              <div>
+                <p className="mb-2">Pool URL:</p>
+                <code className="block bg-black/50 p-2 rounded">pool.supportxmr.com:3333</code>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
+                  onClick={() => navigator.clipboard.writeText("pool.supportxmr.com:3333")}
+                >
+                  <Copy className="w-3 h-3 mr-1" />
+                  Copy Pool URL
+                </Button>
+              </div>
+              <div>
+                <p className="mb-2">Wallet Address:</p>
+                <code className="block bg-black/50 p-2 rounded break-all">46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg</code>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
+                  onClick={() => navigator.clipboard.writeText("46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg")}
+                >
+                  <Copy className="w-3 h-3 mr-1" />
+                  Copy Wallet Address
+                </Button>
+              </div>
+              <PoolStats />
             </div>
           </div>
         ),
@@ -192,12 +215,34 @@ const translations = {
         description: "Edita el archivo config.json",
         content: (
           <div className="space-y-2">
-            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
-              <p>Abre config.json en un editor de texto y actualiza:</p>
-              <ul className="list-disc list-inside mt-2">
-                <li>Configuración del pool</li>
-                <li>Dirección de la billetera</li>
-              </ul>
+            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md space-y-4">
+              <div>
+                <p className="mb-2">URL del Pool:</p>
+                <code className="block bg-black/50 p-2 rounded">pool.supportxmr.com:3333</code>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
+                  onClick={() => navigator.clipboard.writeText("pool.supportxmr.com:3333")}
+                >
+                  <Copy className="w-3 h-3 mr-1" />
+                  Copiar URL del Pool
+                </Button>
+              </div>
+              <div>
+                <p className="mb-2">Dirección de la Billetera:</p>
+                <code className="block bg-black/50 p-2 rounded break-all">46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg</code>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
+                  onClick={() => navigator.clipboard.writeText("46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg")}
+                >
+                  <Copy className="w-3 h-3 mr-1" />
+                  Copiar Dirección
+                </Button>
+              </div>
+              <PoolStats />
             </div>
           </div>
         ),
@@ -360,3 +405,4 @@ const Index = () => {
 };
 
 export default Index;
+
