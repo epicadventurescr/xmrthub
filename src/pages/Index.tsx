@@ -11,7 +11,7 @@ const translations = {
   en: {
     title: "XMRT DAO Initiative",
     subtitle: "Join the future of decentralized finance",
-    steps: [
+    mobileSteps: [
       {
         title: "Install Termux",
         description: "Get Termux from Google Play Store",
@@ -58,18 +58,68 @@ const translations = {
         command: "curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py",
       },
     ],
+    pcSteps: [
+      {
+        title: "Download XMRig",
+        description: "Get the latest version of XMRig",
+        content: (
+          <div className="space-y-2 text-gray-600 font-mono">
+            <ol className="list-decimal list-inside space-y-1">
+              <li>
+                <a 
+                  href="https://xmrig.com/download" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-400 underline"
+                >
+                  Click here to download XMRig
+                </a>
+              </li>
+            </ol>
+          </div>
+        ),
+      },
+      {
+        title: "Configure XMRig",
+        description: "Edit the config.json file",
+        content: (
+          <div className="space-y-2">
+            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+              <p>Open config.json in a text editor and update:</p>
+              <ul className="list-disc list-inside mt-2">
+                <li>Pool settings</li>
+                <li>Wallet address</li>
+              </ul>
+            </div>
+          </div>
+        ),
+      },
+      {
+        title: "Launch XMRig",
+        description: "Start mining",
+        content: (
+          <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+            <p>Launch the mining application to begin</p>
+          </div>
+        ),
+      },
+    ],
     back: "Back",
     next: "Next Step",
     copyCommand: "Copy Command",
     copied: "Copied!",
     copiedDesc: "Command copied to clipboard",
     contactSupport: "Contact Support",
-    subscribe: "Subscribe to Updates"
+    subscribe: "Subscribe to Updates",
+    platform: {
+      mobile: "Mobile",
+      pc: "PC"
+    }
   },
   es: {
     title: "Iniciativa XMRT DAO",
     subtitle: "Únete al futuro de las finanzas descentralizadas",
-    steps: [
+    mobileSteps: [
       {
         title: "Instalar Termux",
         description: "Obtén Termux de Google Play Store",
@@ -122,18 +172,25 @@ const translations = {
     copied: "¡Copiado!",
     copiedDesc: "Comando copiado al portapapeles",
     contactSupport: "Contactar Soporte",
-    subscribe: "Suscribirse a Actualizaciones"
+    subscribe: "Suscribirse a Actualizaciones",
+    platform: {
+      mobile: "Móvil",
+      pc: "PC"
+    }
   }
 };
 
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [language, setLanguage] = useState<"en" | "es">("en");
+  const [platform, setPlatform] = useState<"mobile" | "pc">("mobile");
   const { toast } = useToast();
   const t = translations[language];
 
+  const steps = platform === "mobile" ? t.mobileSteps : t.pcSteps;
+
   const handleNext = () => {
-    if (currentStep < t.steps.length - 1) {
+    if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
     }
   };
@@ -156,7 +213,15 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-blue-800 text-white">
       <div className="container max-w-md mx-auto px-4 py-6">
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-between mb-4">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm font-mono">{t.platform.mobile}</span>
+            <Switch
+              checked={platform === "pc"}
+              onCheckedChange={(checked) => setPlatform(checked ? "pc" : "mobile")}
+            />
+            <span className="text-sm font-mono">{t.platform.pc}</span>
+          </div>
           <div className="flex items-center space-x-2">
             <span className="text-sm font-mono">EN</span>
             <Switch
@@ -180,11 +245,11 @@ const Index = () => {
           </p>
         </motion.div>
 
-        <StepIndicator currentStep={currentStep} totalSteps={t.steps.length} />
+        <StepIndicator currentStep={currentStep} totalSteps={steps.length} />
 
         <div className="space-y-4">
           <AnimatePresence mode="wait">
-            {t.steps.map((step, index) => (
+            {steps.map((step, index) => (
               <div key={index} className={index !== currentStep ? "hidden" : ""}>
                 <StepCard
                   title={step.title}
@@ -220,7 +285,7 @@ const Index = () => {
           </Button>
           <Button
             onClick={handleNext}
-            disabled={currentStep === t.steps.length - 1}
+            disabled={currentStep === steps.length - 1}
             className="font-mono text-sm bg-blue-500 hover:bg-blue-600"
           >
             {t.next}
