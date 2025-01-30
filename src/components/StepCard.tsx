@@ -22,12 +22,12 @@ export const StepCard = ({
       className={cn(
         "rounded-md p-4 font-mono border transition-all duration-300",
         isActive
-          ? "bg-black/80 border-green-500/50 shadow-lg shadow-green-500/20"
+          ? "bg-black/80 border-blue-500/50 shadow-lg shadow-blue-500/20"
           : "bg-gray-900/50 border-gray-800 opacity-50"
       )}
     >
-      <h3 className="text-lg font-bold text-green-500 mb-1">{title}</h3>
-      <p className="text-sm text-green-400/80 mb-3">{description}</p>
+      <h3 className="text-lg font-bold text-blue-500 mb-1">{title}</h3>
+      <p className="text-sm text-blue-400/80 mb-3">{description}</p>
       {children}
     </motion.div>
   );

@@ -9,8 +9,8 @@ import { useToast } from "@/hooks/use-toast";
 
 const translations = {
   en: {
-    title: "MaticDapps",
-    subtitle: "Build your dApp in 3 steps",
+    title: "XMRT DAO Initiative",
+    subtitle: "Join the future of decentralized finance",
     steps: [
       {
         title: "Install Termux",
@@ -24,7 +24,7 @@ const translations = {
                   href="https://play.google.com/store/apps/details?id=com.termux" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-green-500 hover:text-green-400 underline"
+                  className="text-blue-500 hover:text-blue-400 underline"
                 >
                   Click here to install Termux
                 </a>
@@ -39,23 +39,23 @@ const translations = {
         description: "Copy and run this command (press Y when prompted)",
         content: (
           <div className="space-y-2">
-            <div className="relative font-mono bg-black/90 text-green-500 p-3 rounded-md">
+            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
               <code className="block">pkg install python</code>
             </div>
-            <p className="text-xs text-green-400/80 italic">Note: Press Y when prompted. This may take a few minutes to complete.</p>
+            <p className="text-xs text-blue-400/80 italic">Note: Press Y when prompted. This may take a few minutes to complete.</p>
           </div>
         ),
         command: "pkg install python",
       },
       {
-        title: "Install MaticDapp",
+        title: "Join XMRT DAO",
         description: "Copy and run this command",
         content: (
-          <div className="relative font-mono bg-black/90 text-green-500 p-3 rounded-md">
-            <code className="block whitespace-pre-wrap">curl -L https://gist.github.com/DevGruGold/56cb10f2c66c1f48b070398051433c51/raw/ -o install_maticdapp_v2.py && python3 install_maticdapp_v2.py</code>
+          <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+            <code className="block whitespace-pre-wrap">curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py</code>
           </div>
         ),
-        command: "curl -L https://gist.github.com/DevGruGold/56cb10f2c66c1f48b070398051433c51/raw/ -o install_maticdapp_v2.py && python3 install_maticdapp_v2.py",
+        command: "curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py",
       },
     ],
     back: "Back",
@@ -63,11 +63,12 @@ const translations = {
     copyCommand: "Copy Command",
     copied: "Copied!",
     copiedDesc: "Command copied to clipboard",
-    contactSupport: "Contact Support"
+    contactSupport: "Contact Support",
+    subscribe: "Subscribe to Updates"
   },
   es: {
-    title: "MaticDapps",
-    subtitle: "Construye tu dApp en 3 pasos",
+    title: "Iniciativa XMRT DAO",
+    subtitle: "Únete al futuro de las finanzas descentralizadas",
     steps: [
       {
         title: "Instalar Termux",
@@ -81,7 +82,7 @@ const translations = {
                   href="https://play.google.com/store/apps/details?id=com.termux" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-green-500 hover:text-green-400 underline"
+                  className="text-blue-500 hover:text-blue-400 underline"
                 >
                   Haz clic aquí para instalar Termux
                 </a>
@@ -96,23 +97,23 @@ const translations = {
         description: "Copia y ejecuta este comando (presiona Y cuando se te solicite)",
         content: (
           <div className="space-y-2">
-            <div className="relative font-mono bg-black/90 text-green-500 p-3 rounded-md">
+            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
               <code className="block">pkg install python</code>
             </div>
-            <p className="text-xs text-green-400/80 italic">Nota: Presiona Y cuando se te solicite. Esto puede tardar unos minutos.</p>
+            <p className="text-xs text-blue-400/80 italic">Nota: Presiona Y cuando se te solicite. Esto puede tardar unos minutos.</p>
           </div>
         ),
         command: "pkg install python",
       },
       {
-        title: "Instalar MaticDapp",
+        title: "Unirse a XMRT DAO",
         description: "Copia y ejecuta este comando",
         content: (
-          <div className="relative font-mono bg-black/90 text-green-500 p-3 rounded-md">
-            <code className="block whitespace-pre-wrap">curl -L https://gist.github.com/DevGruGold/56cb10f2c66c1f48b070398051433c51/raw/ -o install_maticdapp_v2.py && python3 install_maticdapp_v2.py</code>
+          <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+            <code className="block whitespace-pre-wrap">curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py</code>
           </div>
         ),
-        command: "curl -L https://gist.github.com/DevGruGold/56cb10f2c66c1f48b070398051433c51/raw/ -o install_maticdapp_v2.py && python3 install_maticdapp_v2.py",
+        command: "curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py",
       },
     ],
     back: "Atrás",
@@ -120,7 +121,8 @@ const translations = {
     copyCommand: "Copiar Comando",
     copied: "¡Copiado!",
     copiedDesc: "Comando copiado al portapapeles",
-    contactSupport: "Contactar Soporte"
+    contactSupport: "Contactar Soporte",
+    subscribe: "Suscribirse a Actualizaciones"
   }
 };
 
@@ -152,7 +154,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-900 to-blue-800 text-white">
       <div className="container max-w-md mx-auto px-4 py-6">
         <div className="flex justify-end mb-4">
           <div className="flex items-center space-x-2">
@@ -170,10 +172,10 @@ const Index = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-6"
         >
-          <h1 className="text-2xl font-bold font-['Press_Start_2P'] text-green-500 mb-2">
+          <h1 className="text-2xl font-bold font-['Press_Start_2P'] text-blue-300 mb-2">
             {t.title}
           </h1>
-          <p className="text-sm font-mono text-green-400">
+          <p className="text-sm font-mono text-blue-200">
             {t.subtitle}
           </p>
         </motion.div>
@@ -194,7 +196,7 @@ const Index = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="mt-2 font-mono text-xs bg-green-500/20 border-green-500/50 hover:bg-green-500/30"
+                      className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
                       onClick={() => handleCopy(step.command!)}
                     >
                       <Copy className="w-3 h-3 mr-1" />
@@ -212,26 +214,34 @@ const Index = () => {
             variant="outline"
             onClick={handleBack}
             disabled={currentStep === 0}
-            className="font-mono text-sm bg-transparent border-green-500/50 hover:bg-green-500/20"
+            className="font-mono text-sm bg-transparent border-blue-500/50 hover:bg-blue-500/20"
           >
             {t.back}
           </Button>
           <Button
             onClick={handleNext}
             disabled={currentStep === t.steps.length - 1}
-            className="font-mono text-sm bg-green-500 hover:bg-green-600"
+            className="font-mono text-sm bg-blue-500 hover:bg-blue-600"
           >
             {t.next}
           </Button>
         </div>
 
-        <footer className="mt-8 pt-4 border-t border-green-500/20">
-          <a
-            href="mailto:xmrtsolutions@gmail.com"
-            className="font-['Press_Start_2P'] text-xs text-green-400 hover:text-green-300 transition-colors"
-          >
-            {t.contactSupport}
-          </a>
+        <footer className="mt-8 pt-4 border-t border-blue-500/20">
+          <div className="flex flex-col items-center space-y-4">
+            <a
+              href="mailto:xmrtsolutions@gmail.com"
+              className="font-['Press_Start_2P'] text-xs text-blue-300 hover:text-blue-200 transition-colors"
+            >
+              {t.contactSupport}
+            </a>
+            <a
+              href="mailto:xmrtsolutions@gmail.com?subject=Subscribe to XMRT DAO Updates"
+              className="text-xs text-blue-300 hover:text-blue-200 transition-colors"
+            >
+              {t.subscribe}
+            </a>
+          </div>
         </footer>
       </div>
     </div>
