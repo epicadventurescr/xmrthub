@@ -1,3 +1,4 @@
+
 import { cn } from "@/lib/utils";
 
 interface StepIndicatorProps {
@@ -14,10 +15,10 @@ export const StepIndicator = ({ currentStep, totalSteps }: StepIndicatorProps) =
           className={cn(
             "w-3 h-3 rounded-full transition-all duration-300",
             index < currentStep
-              ? "bg-matic scale-100"
+              ? "bg-primary scale-100"
               : index === currentStep
-              ? "bg-matic-light scale-110 animate-pulse"
-              : "bg-gray-200"
+              ? "bg-primary/70 scale-110 animate-pulse"
+              : "bg-muted-foreground/30"
           )}
         />
       ))}

@@ -10,14 +10,14 @@ import { PoolStats } from "@/components/PoolStats";
 
 const translations = {
   en: {
-    title: "XMRT DAO Initiative",
-    subtitle: "Join the future of decentralized finance",
+    title: "MobileMonero",
+    subtitle: "Private cryptocurrency mining made simple",
     mobileSteps: [
       {
         title: "Install Termux",
         description: "Get Termux from Google Play Store",
         content: (
-          <div className="space-y-2 text-gray-600 font-mono">
+          <div className="space-y-2 text-muted-foreground font-mono">
             <ol className="list-decimal list-inside space-y-1">
               <li>Open Google Play Store</li>
               <li>
@@ -25,7 +25,7 @@ const translations = {
                   href="https://play.google.com/store/apps/details?id=com.termux" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-400 underline"
+                  className="text-primary hover:text-primary/80 underline"
                 >
                   Click here to install Termux
                 </a>
@@ -40,19 +40,19 @@ const translations = {
         description: "Copy and run this command (press Y when prompted)",
         content: (
           <div className="space-y-2">
-            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+            <div className="relative font-mono bg-card/80 text-primary p-3 rounded-md border">
               <code className="block">pkg install python</code>
             </div>
-            <p className="text-xs text-blue-400/80 italic">Note: Press Y when prompted. This may take a few minutes to complete.</p>
+            <p className="text-xs text-muted-foreground italic">Note: Press Y when prompted. This may take a few minutes to complete.</p>
           </div>
         ),
         command: "pkg install python",
       },
       {
-        title: "Join XMRT DAO",
+        title: "Join MobileMonero",
         description: "Copy and run this command",
         content: (
-          <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+          <div className="relative font-mono bg-card/80 text-primary p-3 rounded-md border">
             <code className="block whitespace-pre-wrap">curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py</code>
           </div>
         ),
@@ -64,14 +64,14 @@ const translations = {
         title: "Download XMRig",
         description: "Get the latest version of XMRig",
         content: (
-          <div className="space-y-2 text-gray-600 font-mono">
+          <div className="space-y-2 text-muted-foreground font-mono">
             <ol className="list-decimal list-inside space-y-1">
               <li>
                 <a 
                   href="https://xmrig.com/download" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-400 underline"
+                  className="text-primary hover:text-primary/80 underline"
                 >
                   Click here to download XMRig
                 </a>
@@ -79,21 +79,21 @@ const translations = {
             </ol>
           </div>
         ),
-        command: "" // Added empty command
+        command: ""
       },
       {
         title: "Configure XMRig",
         description: "Edit the config.json file",
         content: (
           <div className="space-y-2">
-            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md space-y-4">
+            <div className="relative font-mono bg-card/80 text-primary p-3 rounded-md border space-y-4">
               <div>
                 <p className="mb-2">Pool URL:</p>
-                <code className="block bg-black/50 p-2 rounded">pool.supportxmr.com:3333</code>
+                <code className="block bg-muted p-2 rounded">pool.supportxmr.com:3333</code>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
+                  className="mt-2 font-mono text-xs border-primary/50 hover:bg-primary/10"
                   onClick={() => navigator.clipboard.writeText("pool.supportxmr.com:3333")}
                 >
                   <Copy className="w-3 h-3 mr-1" />
@@ -102,11 +102,11 @@ const translations = {
               </div>
               <div>
                 <p className="mb-2">Wallet Address:</p>
-                <code className="block bg-black/50 p-2 rounded break-all">46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg</code>
+                <code className="block bg-muted p-2 rounded break-all">46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg</code>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
+                  className="mt-2 font-mono text-xs border-primary/50 hover:bg-primary/10"
                   onClick={() => navigator.clipboard.writeText("46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg")}
                 >
                   <Copy className="w-3 h-3 mr-1" />
@@ -117,17 +117,17 @@ const translations = {
             </div>
           </div>
         ),
-        command: "" // Added empty command
+        command: ""
       },
       {
         title: "Launch XMRig",
         description: "Start mining",
         content: (
-          <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+          <div className="relative font-mono bg-card/80 text-primary p-3 rounded-md border">
             <p>Launch the mining application to begin</p>
           </div>
         ),
-        command: "" // Added empty command
+        command: ""
       },
     ],
     back: "Back",
@@ -143,14 +143,14 @@ const translations = {
     }
   },
   es: {
-    title: "Iniciativa XMRT DAO",
-    subtitle: "Únete al futuro de las finanzas descentralizadas",
+    title: "MobileMonero",
+    subtitle: "Minería de criptomonedas privadas simplificada",
     mobileSteps: [
       {
         title: "Instalar Termux",
         description: "Obtén Termux de Google Play Store",
         content: (
-          <div className="space-y-2 text-gray-600 font-mono">
+          <div className="space-y-2 text-muted-foreground font-mono">
             <ol className="list-decimal list-inside space-y-1">
               <li>Abre Google Play Store</li>
               <li>
@@ -158,7 +158,7 @@ const translations = {
                   href="https://play.google.com/store/apps/details?id=com.termux" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-400 underline"
+                  className="text-primary hover:text-primary/80 underline"
                 >
                   Haz clic aquí para instalar Termux
                 </a>
@@ -173,19 +173,19 @@ const translations = {
         description: "Copia y ejecuta este comando (presiona Y cuando se te solicite)",
         content: (
           <div className="space-y-2">
-            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+            <div className="relative font-mono bg-card/80 text-primary p-3 rounded-md border">
               <code className="block">pkg install python</code>
             </div>
-            <p className="text-xs text-blue-400/80 italic">Nota: Presiona Y cuando se te solicite. Esto puede tardar unos minutos.</p>
+            <p className="text-xs text-muted-foreground italic">Nota: Presiona Y cuando se te solicite. Esto puede tardar unos minutos.</p>
           </div>
         ),
         command: "pkg install python",
       },
       {
-        title: "Unirse a XMRT DAO",
+        title: "Unirse a MobileMonero",
         description: "Copia y ejecuta este comando",
         content: (
-          <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+          <div className="relative font-mono bg-card/80 text-primary p-3 rounded-md border">
             <code className="block whitespace-pre-wrap">curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py</code>
           </div>
         ),
@@ -197,14 +197,14 @@ const translations = {
         title: "Descargar XMRig",
         description: "Obtén la última versión de XMRig",
         content: (
-          <div className="space-y-2 text-gray-600 font-mono">
+          <div className="space-y-2 text-muted-foreground font-mono">
             <ol className="list-decimal list-inside space-y-1">
               <li>
                 <a 
                   href="https://xmrig.com/download" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-400 underline"
+                  className="text-primary hover:text-primary/80 underline"
                 >
                   Haz clic aquí para descargar XMRig
                 </a>
@@ -212,21 +212,21 @@ const translations = {
             </ol>
           </div>
         ),
-        command: "" // Added empty command
+        command: ""
       },
       {
         title: "Configurar XMRig",
         description: "Edita el archivo config.json",
         content: (
           <div className="space-y-2">
-            <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md space-y-4">
+            <div className="relative font-mono bg-card/80 text-primary p-3 rounded-md border space-y-4">
               <div>
                 <p className="mb-2">URL del Pool:</p>
-                <code className="block bg-black/50 p-2 rounded">pool.supportxmr.com:3333</code>
+                <code className="block bg-muted p-2 rounded">pool.supportxmr.com:3333</code>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
+                  className="mt-2 font-mono text-xs border-primary/50 hover:bg-primary/10"
                   onClick={() => navigator.clipboard.writeText("pool.supportxmr.com:3333")}
                 >
                   <Copy className="w-3 h-3 mr-1" />
@@ -235,11 +235,11 @@ const translations = {
               </div>
               <div>
                 <p className="mb-2">Dirección de la Billetera:</p>
-                <code className="block bg-black/50 p-2 rounded break-all">46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg</code>
+                <code className="block bg-muted p-2 rounded break-all">46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg</code>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
+                  className="mt-2 font-mono text-xs border-primary/50 hover:bg-primary/10"
                   onClick={() => navigator.clipboard.writeText("46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg")}
                 >
                   <Copy className="w-3 h-3 mr-1" />
@@ -250,17 +250,17 @@ const translations = {
             </div>
           </div>
         ),
-        command: "" // Added empty command
+        command: ""
       },
       {
         title: "Iniciar XMRig",
         description: "Comienza a minar",
         content: (
-          <div className="relative font-mono bg-black/90 text-blue-500 p-3 rounded-md">
+          <div className="relative font-mono bg-card/80 text-primary p-3 rounded-md border">
             <p>Inicia la aplicación de minería para comenzar</p>
           </div>
         ),
-        command: "" // Added empty command
+        command: ""
       },
     ],
     back: "Atrás",
@@ -308,7 +308,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-900 to-blue-800 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary text-foreground">
       <div className="container max-w-md mx-auto px-4 py-6">
         <div className="flex justify-between mb-4">
           <div className="flex items-center space-x-2">
@@ -334,10 +334,10 @@ const Index = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-6"
         >
-          <h1 className="text-2xl font-bold font-['Press_Start_2P'] text-blue-300 mb-2">
+          <h1 className="text-2xl font-bold font-['Press_Start_2P'] text-primary mb-2">
             {t.title}
           </h1>
-          <p className="text-sm font-mono text-blue-200">
+          <p className="text-sm font-mono text-muted-foreground">
             {t.subtitle}
           </p>
         </motion.div>
@@ -360,7 +360,7 @@ const Index = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="mt-2 font-mono text-xs bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30"
+                      className="mt-2 font-mono text-xs border-primary/50 hover:bg-primary/10"
                       onClick={() => handleCopy(step.command!)}
                     >
                       <Copy className="w-3 h-3 mr-1" />
@@ -378,30 +378,30 @@ const Index = () => {
             variant="outline"
             onClick={handleBack}
             disabled={currentStep === 0}
-            className="font-mono text-sm bg-transparent border-blue-500/50 hover:bg-blue-500/20"
+            className="font-mono text-sm border-primary/50 hover:bg-primary/10"
           >
             {t.back}
           </Button>
           <Button
             onClick={handleNext}
             disabled={currentStep === steps.length - 1}
-            className="font-mono text-sm bg-blue-500 hover:bg-blue-600"
+            className="font-mono text-sm bg-primary hover:bg-primary/90 text-primary-foreground"
           >
             {t.next}
           </Button>
         </div>
 
-        <footer className="mt-8 pt-4 border-t border-blue-500/20">
+        <footer className="mt-8 pt-4 border-t border-border">
           <div className="flex flex-col items-center space-y-4">
             <a
               href="mailto:xmrtsolutions@gmail.com"
-              className="font-['Press_Start_2P'] text-xs text-blue-300 hover:text-blue-200 transition-colors"
+              className="font-['Press_Start_2P'] text-xs text-primary hover:text-primary/80 transition-colors"
             >
               {t.contactSupport}
             </a>
             <a
-              href="mailto:xmrtsolutions@gmail.com?subject=Subscribe to XMRT DAO Updates"
-              className="text-xs text-blue-300 hover:text-blue-200 transition-colors"
+              href="mailto:xmrtsolutions@gmail.com?subject=Subscribe to MobileMonero Updates"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors"
             >
               {t.subscribe}
             </a>
