@@ -399,14 +399,24 @@ const Index = () => {
             >
               {t.contactSupport}
             </a>
-            <a
-              href="https://xmrtdao.streamlit.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-muted-foreground hover:text-primary transition-colors underline"
-            >
-              Register Your Sessions
-            </a>
+            <div className="flex flex-col sm:flex-row items-center gap-4 text-center">
+              <a
+                href="https://xmrtdao.streamlit.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:text-primary transition-colors underline"
+              >
+                Register Your Sessions
+              </a>
+              <a
+                href="https://xmrt.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:text-primary transition-colors underline"
+              >
+                Learn More about XMRT DAO
+              </a>
+            </div>
             <a
               href="mailto:xmrtsolutions@gmail.com?subject=Subscribe to MobileMonero Updates"
               className="text-xs text-muted-foreground hover:text-primary transition-colors"
