@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PoolStats } from "@/components/PoolStats";
+import { DaoStats } from "@/components/DaoStats";
 
 const translations = {
   en: {
@@ -113,7 +114,6 @@ const translations = {
                   Copy Wallet Address
                 </Button>
               </div>
-              <PoolStats />
             </div>
           </div>
         ),
@@ -246,7 +246,6 @@ const translations = {
                   Copiar Dirección
                 </Button>
               </div>
-              <PoolStats />
             </div>
           </div>
         ),
@@ -342,7 +341,7 @@ const Index = () => {
           </p>
         </motion.div>
 
-        {platform === "pc" && <PoolStats />}
+        <DaoStats />
 
         <StepIndicator currentStep={currentStep} totalSteps={steps.length} />
 
@@ -415,6 +414,14 @@ const Index = () => {
                 className="text-xs text-muted-foreground hover:text-primary transition-colors underline"
               >
                 Learn More about XMRT DAO
+              </a>
+              <a
+                href="https://xmrtdao.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:text-primary transition-colors underline"
+              >
+                View Live Mining
               </a>
             </div>
             <a
