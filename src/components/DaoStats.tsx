@@ -87,9 +87,30 @@ export const DaoStats = () => {
     );
   }
 
-  const daoHashrate = (data?.wallet?.hash || 0) / 1000000;
-  const daoWorkers = data?.wallet?.identifierStats ? Object.keys(data.wallet.identifierStats).length : 0;
-  const poolHashrate = ((data?.pool?.pool?.hashrate || 0) / 1000000).toFixed(1);
+  // Helper functions
+  const formatXMR = (amount: number) => (amount / 1000000000000).toFixed(6);
+  const formatDate = (timestamp: number) => new Date(timestamp * 1000).toLocaleDateString();
+  const formatHashrate = (hash: number) => (hash / 1000000).toFixed(2);
+
+  // Parse API data correctly based on SupportXMR API structure
+  const daoHashrate = formatHashrate(data?.wallet?.hash || 0);
+  const poolHashrate = formatHashrate(data?.pool?.pool_statistics?.hashRate || 0);
+  const poolMiners = data?.pool?.pool_statistics?.miners || 0;
+  
+  // Historical wallet data
+  const totalHashes = data?.wallet?.totalHashes || 0;
+  const validShares = data?.wallet?.validShares || 0;
+  const invalidShares = data?.wallet?.invalidShares || 0;
+  const amtPaid = data?.wallet?.amtPaid || 0;
+  const amtDue = data?.wallet?.amtDue || 0;
+  const txnCount = data?.wallet?.txnCount || 0;
+  const lastHash = data?.wallet?.lastHash || 0;
+
+  console.log('DAO Stats Debug:', { 
+    walletData: data?.wallet, 
+    poolData: data?.pool?.pool_statistics,
+    source: (data as any)?.source 
+  });
 
   return (
     <motion.div 
@@ -101,16 +122,43 @@ export const DaoStats = () => {
         <span className={`inline-block h-2 w-2 rounded-full ${((data as any)?.source && (data as any).source !== 'mock') ? 'bg-primary' : 'bg-muted'}`}></span>
         <span className="text-[10px] uppercase tracking-wide">{((data as any)?.source && (data as any).source !== 'mock') ? 'Live data' : 'Offline'}</span>
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-4 text-center">
+      <div className="flex flex-wrap items-center justify-center gap-2 text-center mb-2">
         <div className="text-primary">
-          DAO: <span className="text-foreground">{daoHashrate.toFixed(2)} MH/s</span>
-        </div>
-        <div className="text-primary">
-          Workers: <span className="text-foreground">{daoWorkers}</span>
+          DAO: <span className="text-foreground">{daoHashrate} MH/s</span>
         </div>
         <div className="text-primary">
           Pool: <span className="text-foreground">{poolHashrate} MH/s</span>
         </div>
+        <div className="text-primary">
+          Miners: <span className="text-foreground">{poolMiners}</span>
+        </div>
+      </div>
+      
+      {/* Historical wallet data */}
+      <div className="grid grid-cols-2 gap-2 text-[10px] border-t border-muted/30 pt-2">
+        <div className="text-muted-foreground">
+          Total Hashes: <span className="text-foreground">{totalHashes.toLocaleString()}</span>
+        </div>
+        <div className="text-muted-foreground">
+          Valid Shares: <span className="text-foreground">{validShares.toLocaleString()}</span>
+        </div>
+        <div className="text-muted-foreground">
+          Invalid Shares: <span className="text-foreground">{invalidShares}</span>
+        </div>
+        <div className="text-muted-foreground">
+          Transactions: <span className="text-foreground">{txnCount}</span>
+        </div>
+        <div className="text-muted-foreground">
+          XMR Paid: <span className="text-foreground">{formatXMR(amtPaid)}</span>
+        </div>
+        <div className="text-muted-foreground">
+          XMR Due: <span className="text-foreground">{formatXMR(amtDue)}</span>
+        </div>
+        {lastHash > 0 && (
+          <div className="col-span-2 text-muted-foreground text-center">
+            Last Seen: <span className="text-foreground">{formatDate(lastHash)}</span>
+          </div>
+        )}
       </div>
     </motion.div>
   );
