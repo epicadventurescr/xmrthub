@@ -8,6 +8,7 @@ import { Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PoolStats } from "@/components/PoolStats";
 import { DaoStats } from "@/components/DaoStats";
+import { LiveMiningFeed } from "@/components/LiveMiningFeed";
 
 const translations = {
   en: {
@@ -342,6 +343,8 @@ const Index = () => {
         </motion.div>
 
         <DaoStats />
+
+        <LiveMiningFeed />
 
         <StepIndicator currentStep={currentStep} totalSteps={steps.length} />
 
