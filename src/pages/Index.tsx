@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StepIndicator } from "@/components/StepIndicator";
 import { StepCard } from "@/components/StepCard";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,40 @@ import { Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PoolStats } from "@/components/PoolStats";
 import { DaoStats } from "@/components/DaoStats";
-import { LiveMiningFeed } from "@/components/LiveMiningFeed";
+import { DaoLeaderboard } from "@/components/DaoLeaderboard";
+import { useQuery } from "@tanstack/react-query";
+
+// Add DAO wallet constant and fetch function for sharing with leaderboard
+const DAO_WALLET = "46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg";
+
+const fetchDaoStatsForLeaderboard = async () => {
+  try {
+    const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(`https://supportxmr.com/api/miner/${DAO_WALLET}/stats`)}`, {
+      headers: { 
+        accept: "application/json",
+        "User-Agent": "MobileMonero/1.0"
+      }
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      return {
+        hashrate: data.hash || 0,
+        shares: data.validShares || 0,
+        isLive: true
+      };
+    }
+  } catch (error) {
+    console.log('Failed to fetch DAO stats for leaderboard:', error);
+  }
+  
+  // Return mock data as fallback
+  return {
+    hashrate: Math.floor(Math.random() * 1000) + 500,
+    shares: Math.floor(Math.random() * 50000) + 10000,
+    isLive: false
+  };
+};
 
 const translations = {
   en: {
@@ -284,6 +317,14 @@ const Index = () => {
   const { toast } = useToast();
   const t = translations[language];
 
+  // Fetch DAO stats for the leaderboard
+  const { data: leaderboardStats } = useQuery({
+    queryKey: ["daoLeaderboardStats"],
+    queryFn: fetchDaoStatsForLeaderboard,
+    refetchInterval: 30000, // Refresh every 30 seconds
+    staleTime: 15000, // Consider data stale after 15 seconds
+  });
+
   const steps = platform === "mobile" ? t.mobileSteps : t.pcSteps;
 
   const handleNext = () => {
@@ -344,7 +385,11 @@ const Index = () => {
 
         <DaoStats />
 
-        <LiveMiningFeed />
+        <DaoLeaderboard 
+          totalHashrate={leaderboardStats?.hashrate || 0}
+          totalShares={leaderboardStats?.shares || 0}
+          isLive={leaderboardStats?.isLive || false}
+        />
 
         <StepIndicator currentStep={currentStep} totalSteps={steps.length} />
 

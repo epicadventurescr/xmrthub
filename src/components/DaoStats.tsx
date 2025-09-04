@@ -206,7 +206,18 @@ export const DaoStats = () => {
   // Helper functions
   const formatXMR = (amount: number) => (amount / 1000000000000).toFixed(6);
   const formatDate = (timestamp: number) => new Date(timestamp * 1000).toLocaleDateString();
-  const formatHashrate = (hash: number) => (hash / 1000000).toFixed(2);
+  
+  // Unit-aware hashrate formatting
+  const formatHashrateUnits = (hashrate: number): string => {
+    if (hashrate < 1000) {
+      return `${Math.round(hashrate)} H/s`;
+    } else if (hashrate < 1000000) {
+      return `${(hashrate / 1000).toFixed(1)} KH/s`;
+    } else {
+      return `${(hashrate / 1000000).toFixed(2)} MH/s`;
+    }
+  };
+  
   const formatTime = (timestamp: number) => {
     const now = Date.now() / 1000;
     const diff = now - timestamp;
@@ -234,10 +245,10 @@ export const DaoStats = () => {
       {/* Main stats */}
       <div className="flex flex-wrap items-center justify-center gap-2 text-center mb-2">
         <div className="text-primary">
-          DAO: <span className="text-foreground">{formatHashrate(stats.daoHashrate)} MH/s</span>
+          DAO: <span className="text-foreground">{formatHashrateUnits(stats.daoHashrate)}</span>
         </div>
         <div className="text-primary">
-          Pool: <span className="text-foreground">{formatHashrate(stats.poolHashrate)} MH/s</span>
+          Pool: <span className="text-foreground">{formatHashrateUnits(stats.poolHashrate)}</span>
         </div>
         <div className="text-primary">
           Miners: <span className="text-foreground">{stats.miners}</span>
