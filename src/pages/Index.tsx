@@ -4,7 +4,7 @@ import { StepCard } from "@/components/StepCard";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy } from "lucide-react";
+import { Copy, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PoolStats } from "@/components/PoolStats";
 import { DaoStats } from "@/components/DaoStats";
@@ -174,7 +174,10 @@ const translations = {
     platform: {
       mobile: "Mobile",
       pc: "PC"
-    }
+    },
+    startMining: "Start Mining",
+    termuxNotInstalled: "Termux not installed",
+    termuxNotInstalledDesc: "Command copied! Please install Termux first."
   },
   es: {
     title: "MobileMonero",
@@ -306,7 +309,10 @@ const translations = {
     platform: {
       mobile: "Móvil",
       pc: "PC"
-    }
+    },
+    startMining: "Comenzar Minería",
+    termuxNotInstalled: "Termux no instalado",
+    termuxNotInstalledDesc: "¡Comando copiado! Por favor instala Termux primero."
   }
 };
 
@@ -348,6 +354,39 @@ const Index = () => {
     });
   };
 
+  const handleStartMining = () => {
+    const command = "curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py";
+    
+    // Check if mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // Try to open Termux with deep link
+      const termuxIntent = `intent://x-callback-url/run?command=${encodeURIComponent(command)}#Intent;scheme=termux;package=com.termux;end`;
+      window.location.href = termuxIntent;
+      
+      // Fallback: copy to clipboard after a short delay
+      setTimeout(() => {
+        navigator.clipboard.writeText(command);
+        toast({
+          title: t.termuxNotInstalled,
+          description: t.termuxNotInstalledDesc,
+        });
+        // Scroll to step 3 (Join MobileMonero)
+        if (platform === "mobile") {
+          setCurrentStep(2);
+        }
+      }, 1000);
+    } else {
+      // Desktop: just copy the command
+      navigator.clipboard.writeText(command);
+      toast({
+        title: t.copied,
+        description: t.copiedDesc,
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary text-foreground">
       <div className="container max-w-md mx-auto px-4 py-6">
@@ -382,6 +421,18 @@ const Index = () => {
             {t.subtitle}
           </p>
         </motion.div>
+
+        <div className="flex justify-center mb-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleStartMining}
+            className="text-xs font-mono border-primary/30 hover:border-primary/50 hover:bg-primary/5 text-muted-foreground hover:text-primary transition-all"
+          >
+            <Zap className="w-3 h-3 mr-1.5" />
+            {t.startMining}
+          </Button>
+        </div>
 
         <DaoStats />
 
@@ -469,7 +520,7 @@ const Index = () => {
                 rel="noopener noreferrer"
                 className="text-xs text-muted-foreground hover:text-primary transition-colors underline"
               >
-                View Live Mining
+                Speak with Eliza
               </a>
             </div>
             <a
