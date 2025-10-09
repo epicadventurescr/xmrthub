@@ -320,6 +320,7 @@ const Index = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [language, setLanguage] = useState<"en" | "es">("en");
   const [platform, setPlatform] = useState<"mobile" | "pc">("mobile");
+  const [isStartingMining, setIsStartingMining] = useState(false);
   const { toast } = useToast();
   const t = translations[language];
 
@@ -354,36 +355,72 @@ const Index = () => {
     });
   };
 
-  const handleStartMining = () => {
+  const handleStartMining = async () => {
     const command = "curl -o signup.py -L https://gist.githubusercontent.com/DevGruGold/dc22c5bf983663e36394af8565218d82/raw/ && python3 signup.py";
+    
+    setIsStartingMining(true);
     
     // Check if mobile device
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
     if (isMobile) {
-      // Try to open Termux with deep link
-      const termuxIntent = `intent://x-callback-url/run?command=${encodeURIComponent(command)}#Intent;scheme=termux;package=com.termux;end`;
-      window.location.href = termuxIntent;
-      
-      // Fallback: copy to clipboard after a short delay
-      setTimeout(() => {
-        navigator.clipboard.writeText(command);
+      try {
+        // STEP 1: Copy to clipboard FIRST and wait for completion
+        await navigator.clipboard.writeText(command);
+        
+        // Store in session storage for persistence
+        sessionStorage.setItem('mining-command', command);
+        
+        // STEP 2: Show immediate success feedback
+        toast({
+          title: "Command Ready!",
+          description: "Opening Termux... Paste and run the command.",
+          duration: 4000,
+        });
+        
+        // STEP 3: Small delay to ensure clipboard operation completes
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // STEP 4: Try to open Termux
+        window.location.href = 'termux://';
+        
+        // STEP 5: Fallback to Play Store if Termux not detected
+        setTimeout(() => {
+          window.location.href = 'https://play.google.com/store/apps/details?id=com.termux';
+        }, 1500);
+        
+      } catch (err) {
+        // Clipboard API failed - show manual instruction
         toast({
           title: t.termuxNotInstalled,
           description: t.termuxNotInstalledDesc,
+          duration: 5000,
         });
         // Scroll to step 3 (Join MobileMonero)
         if (platform === "mobile") {
           setCurrentStep(2);
         }
-      }, 1000);
+      } finally {
+        setTimeout(() => setIsStartingMining(false), 2000);
+      }
     } else {
-      // Desktop: just copy the command
-      navigator.clipboard.writeText(command);
-      toast({
-        title: t.copied,
-        description: t.copiedDesc,
-      });
+      // Desktop: copy and show confirmation
+      try {
+        await navigator.clipboard.writeText(command);
+        sessionStorage.setItem('mining-command', command);
+        toast({
+          title: t.copied,
+          description: t.copiedDesc,
+          duration: 3000,
+        });
+      } catch (err) {
+        toast({
+          title: "Copy Failed",
+          description: "Please manually copy the command from Step 3",
+        });
+      } finally {
+        setIsStartingMining(false);
+      }
     }
   };
 
@@ -427,10 +464,11 @@ const Index = () => {
             variant="outline"
             size="sm"
             onClick={handleStartMining}
-            className="text-xs font-mono border-primary/30 hover:border-primary/50 hover:bg-primary/5 text-muted-foreground hover:text-primary transition-all"
+            disabled={isStartingMining}
+            className="text-xs font-mono border-primary/30 hover:border-primary/50 hover:bg-primary/5 text-muted-foreground hover:text-primary transition-all disabled:opacity-50"
           >
-            <Zap className="w-3 h-3 mr-1.5" />
-            {t.startMining}
+            <Zap className={`w-3 h-3 mr-1.5 ${isStartingMining ? 'animate-pulse' : ''}`} />
+            {isStartingMining ? "Opening..." : t.startMining}
           </Button>
         </div>
 
