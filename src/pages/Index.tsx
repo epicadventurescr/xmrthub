@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { StepIndicator } from "@/components/StepIndicator";
 import { StepCard } from "@/components/StepCard";
 import { Button } from "@/components/ui/button";
@@ -528,18 +529,35 @@ const Index = () => {
         </div>
 
         <footer className="mt-8 pt-4 border-t border-border">
-          <p className="text-xs text-muted-foreground text-center">
-            Copyright 2026, Funds Mined are Collectively Managed by{" "}
-            <a
-              href="https://suite-beta.vercel.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:text-primary/80 underline transition-colors"
-            >
-              Suite AI
-            </a>{" "}
-            for the XMRT DAO and it's member contributors.
-          </p>
+          <div className="flex flex-col items-center space-y-3">
+            <p className="text-xs text-muted-foreground text-center">
+              Copyright 2026 XMRT DAO. Funds Mined are Collectively Managed by{" "}
+              <a
+                href="https://suite-beta.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 underline transition-colors"
+              >
+                Suite AI
+              </a>{" "}
+              for the XMRT DAO and it's member contributors.
+            </p>
+            <div className="flex items-center gap-4 text-xs">
+              <a
+                href="mailto:xmrtsolutions@gmail.com?subject=Contact XMRT DAO"
+                className="text-muted-foreground hover:text-primary transition-colors underline"
+              >
+                Contact Us
+              </a>
+              <span className="text-muted-foreground">|</span>
+              <Link
+                to="/privacy"
+                className="text-muted-foreground hover:text-primary transition-colors underline"
+              >
+                Privacy Policy
+              </Link>
+            </div>
+          </div>
         </footer>
       </div>
     </div>
