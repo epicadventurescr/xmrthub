@@ -528,46 +528,18 @@ const Index = () => {
         </div>
 
         <footer className="mt-8 pt-4 border-t border-border">
-          <div className="flex flex-col items-center space-y-4">
+          <p className="text-xs text-muted-foreground text-center">
+            Copyright 2026, Funds Mined are Collectively Managed by{" "}
             <a
-              href="mailto:xmrtsolutions@gmail.com?subject=MobileMonero Support Request&body=Hi%20MobileMonero%20team%2C%0A%0AI%20need%20help%20with%3A%0A%0A[Please%20describe%20your%20issue%20here]"
-              className="font-['Press_Start_2P'] text-xs text-primary hover:text-primary/80 transition-colors"
+              href="https://suite-beta.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:text-primary/80 underline transition-colors"
             >
-              {t.contactSupport}
-            </a>
-            <div className="flex flex-col sm:flex-row items-center gap-4 text-center">
-              <a
-                href="https://xmrtdao.streamlit.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-muted-foreground hover:text-primary transition-colors underline"
-              >
-                Register Your Sessions
-              </a>
-              <a
-                href="https://xmrt.vercel.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-muted-foreground hover:text-primary transition-colors underline"
-              >
-                Learn More about XMRT DAO
-              </a>
-              <a
-                href="https://xmrtdao.vercel.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-muted-foreground hover:text-primary transition-colors underline"
-              >
-                Speak with Eliza
-              </a>
-            </div>
-            <a
-              href="mailto:xmrtsolutions@gmail.com?subject=Subscribe to MobileMonero Updates"
-              className="text-xs text-muted-foreground hover:text-primary transition-colors"
-            >
-              {t.subscribe}
-            </a>
-          </div>
+              Suite AI
+            </a>{" "}
+            for the XMRT DAO and it's member contributors.
+          </p>
         </footer>
       </div>
     </div>
