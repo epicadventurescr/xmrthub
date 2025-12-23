@@ -551,10 +551,10 @@ const Index = () => {
               </a>
               <span className="text-muted-foreground">|</span>
               <Link
-                to="/privacy"
+                to={`/privacy?lang=${language}`}
                 className="text-muted-foreground hover:text-primary transition-colors underline"
               >
-                Privacy Policy
+                {language === "en" ? "Privacy Policy" : "Política de Privacidad"}
               </Link>
             </div>
           </div>
