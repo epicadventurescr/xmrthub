@@ -17,48 +17,33 @@ interface MiningStats {
   lastHash: number;
   source: string;
   isLive: boolean;
-  networkDifficulty?: number;
-  blockHeight?: number;
-  lastBlockTime?: number;
 }
 
 const fetchDaoStats = async (): Promise<MiningStats> => {
   const endpoints = {
     pool: "https://supportxmr.com/api/pool/stats",
     wallet: `https://supportxmr.com/api/miner/${DAO_WALLET}/stats`,
-    xmrtEcosystem: "https://xmrtnet-eliza.onrender.com/api/autonomous/status",
-    moneroNetwork: "https://localmonero.co/blocks/api/stats",
   };
 
-  // Enhanced proxy list with better CORS handling
+  // Prioritize corsproxy.io first - it works reliably
   const proxies = [
-    { label: "direct", type: "json" as const, wrap: (u: string) => u },
-    { label: "cors-anywhere", type: "json" as const, wrap: (u: string) => `https://cors-anywhere.herokuapp.com/${u}` },
-    { label: "allorigins", type: "json" as const, wrap: (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}` },
-    { label: "corsproxy", type: "json" as const, wrap: (u: string) => `https://corsproxy.io/?${encodeURIComponent(u)}` },
-    { label: "isomorphic-git", type: "json" as const, wrap: (u: string) => `https://cors.isomorphic-git.org/${u}` },
-    { label: "jina", type: "text" as const, wrap: (u: string) => `https://r.jina.ai/http://${u.replace(/^https?:\/\//, "")}` },
+    { label: "corsproxy", wrap: (u: string) => `https://corsproxy.io/?${encodeURIComponent(u)}` },
+    { label: "allorigins", wrap: (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}` },
   ];
 
-  async function get(url: string, type: "json" | "text", timeout = 10000) {
+  async function get(url: string, timeout = 8000) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
     
     try {
       const res = await fetch(url, { 
-        headers: { 
-          accept: "application/json",
-          "User-Agent": "MobileMonero/1.0"
-        },
+        headers: { accept: "application/json" },
         signal: controller.signal,
-        mode: 'cors'
       });
       clearTimeout(timeoutId);
       
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      if (type === "json") return res.json();
-      const text = await res.text();
-      return JSON.parse(text);
+      return res.json();
     } catch (error) {
       clearTimeout(timeoutId);
       throw error;
@@ -67,32 +52,26 @@ const fetchDaoStats = async (): Promise<MiningStats> => {
 
   let poolData: any | undefined;
   let walletData: any | undefined;
-  let networkData: any | undefined;
   let source = "mock";
   let isLive = false;
 
-  // Try to fetch from multiple sources with fallbacks
+  // Try to fetch from proxies with fallbacks (silent errors)
   for (const p of proxies) {
     try {
-      const promises = [
-        get(p.wrap(endpoints.pool), p.type).catch(() => null),
-        get(p.wrap(endpoints.wallet), p.type).catch(() => null),
-        get(p.wrap(endpoints.moneroNetwork), p.type).catch(() => null),
-      ];
-      
-      const [pool, wallet, network] = await Promise.all(promises);
+      const [pool, wallet] = await Promise.all([
+        get(p.wrap(endpoints.pool)).catch(() => null),
+        get(p.wrap(endpoints.wallet)).catch(() => null),
+      ]);
       
       if (pool || wallet) {
         poolData = pool;
         walletData = wallet;
-        networkData = network;
         source = p.label;
         isLive = true;
         break;
       }
-    } catch (error) {
-      console.log(`Proxy ${p.label} failed:`, error);
-      // Continue to next proxy
+    } catch {
+      // Silent fail - try next proxy
     }
   }
 
@@ -114,9 +93,6 @@ const fetchDaoStats = async (): Promise<MiningStats> => {
       lastHash: Math.floor(Date.now() / 1000) - Math.floor(Math.random() * 3600),
       source: "mock",
       isLive: false,
-      networkDifficulty: Math.floor(Math.random() * 1000000000000),
-      blockHeight: 3000000 + Math.floor(Math.random() * 10000),
-      lastBlockTime: Math.floor(Date.now() / 1000) - Math.floor(Math.random() * 120),
     };
   }
 
@@ -138,9 +114,6 @@ const fetchDaoStats = async (): Promise<MiningStats> => {
     lastHash: walletData?.lastHash || 0,
     source,
     isLive,
-    networkDifficulty: networkData?.difficulty,
-    blockHeight: networkData?.height,
-    lastBlockTime: networkData?.last_block_timestamp,
   };
 };
 
@@ -255,20 +228,6 @@ export const DaoStats = () => {
         </div>
       </div>
       
-      {/* Network stats */}
-      {(stats.networkDifficulty || stats.blockHeight) && (
-        <div className="flex flex-wrap items-center justify-center gap-2 text-center mb-2 text-[10px] text-muted-foreground">
-          {stats.blockHeight && (
-            <div>Block: <span className="text-foreground">{stats.blockHeight.toLocaleString()}</span></div>
-          )}
-          {stats.networkDifficulty && (
-            <div>Difficulty: <span className="text-foreground">{(stats.networkDifficulty / 1000000000).toFixed(1)}G</span></div>
-          )}
-          {stats.lastBlockTime && (
-            <div>Last Block: <span className="text-foreground">{formatTime(stats.lastBlockTime)}</span></div>
-          )}
-        </div>
-      )}
       
       {/* Historical wallet data */}
       <div className="grid grid-cols-2 gap-2 text-[10px] border-t border-muted/30 pt-2">
