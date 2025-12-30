@@ -16,6 +16,8 @@ interface MiningStats {
   amtDue: number;
   txnCount: number;
   lastHash: number;
+  timeSinceLastHash: number;
+  hashrateEstimated: boolean;
   source: string;
   isLive: boolean;
 }
@@ -92,6 +94,8 @@ const fetchDaoStats = async (): Promise<MiningStats> => {
       amtDue: Math.floor(Math.random() * 100000000000),
       txnCount: Math.floor(Math.random() * 100),
       lastHash: Math.floor(Date.now() / 1000) - Math.floor(Math.random() * 3600),
+      timeSinceLastHash: 0,
+      hashrateEstimated: false,
       source: "mock",
       isLive: false,
     };
@@ -100,7 +104,21 @@ const fetchDaoStats = async (): Promise<MiningStats> => {
   // Parse real data
   const poolHashrate = poolData?.pool_statistics?.hashRate || poolData?.pool?.hashrate || 0;
   const miners = poolData?.pool_statistics?.miners || poolData?.pool?.miners || 0;
-  const daoHashrate = walletData?.hash || 0;
+  
+  // Calculate estimated hashrate if instantaneous is 0 but activity is recent
+  const lastHashTimestamp = walletData?.lastHash || 0;
+  const now = Math.floor(Date.now() / 1000);
+  const timeSinceLastHash = now - lastHashTimestamp;
+  
+  let daoHashrate = walletData?.hash || 0;
+  let hashrateEstimated = false;
+  
+  if (daoHashrate === 0 && timeSinceLastHash < 600 && walletData?.validShares > 0) {
+    // Estimate based on shares when hash is 0 but activity is recent
+    daoHashrate = Math.floor((walletData.validShares * 100000) / Math.max(timeSinceLastHash * 10, 1));
+    daoHashrate = Math.min(daoHashrate, 50000);
+    hashrateEstimated = true;
+  }
   
   return {
     poolHashrate,
@@ -113,6 +131,8 @@ const fetchDaoStats = async (): Promise<MiningStats> => {
     amtDue: walletData?.amtDue || 0,
     txnCount: walletData?.txnCount || 0,
     lastHash: walletData?.lastHash || 0,
+    timeSinceLastHash,
+    hashrateEstimated,
     source,
     isLive,
   };
