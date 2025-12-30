@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 
 const DAO_WALLET = "46UxNFuGM2E3UwmZWWJicaRPoRwqwW4byQkaTHkX8yPcVihp91qAVtSFipWUGJJUyTXgzSqxzDQtNLf2bsp2DX2qCCgC5mg";
 
@@ -119,7 +120,7 @@ const fetchDaoStats = async (): Promise<MiningStats> => {
 
 export const DaoStats = () => {
   const [lastUpdate, setLastUpdate] = useState(Date.now());
-  
+  const [hashrateHistory, setHashrateHistory] = useState<{ time: number; dao: number; pool: number }[]>([]);
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["daoStats", lastUpdate],
     queryFn: fetchDaoStats,
@@ -129,7 +130,18 @@ export const DaoStats = () => {
     retryDelay: 1000,
   });
 
-  // Auto-refresh every 30 seconds to simulate live feed
+  // Track hashrate history
+  useEffect(() => {
+    if (data && data.isLive) {
+      setHashrateHistory(prev => {
+        const newEntry = { time: Date.now(), dao: data.daoHashrate, pool: data.poolHashrate };
+        const updated = [...prev, newEntry].slice(-12); // Keep last 12 data points (~3 min)
+        return updated;
+      });
+    }
+  }, [data]);
+
+  // Auto-refresh every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setLastUpdate(Date.now());
@@ -228,6 +240,27 @@ export const DaoStats = () => {
         </div>
       </div>
       
+      {/* Hashrate sparkline chart */}
+      {hashrateHistory.length > 1 && (
+        <div className="h-12 w-full my-2">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={hashrateHistory}>
+              <YAxis domain={['dataMin', 'dataMax']} hide />
+              <Line 
+                type="monotone" 
+                dataKey="pool" 
+                stroke="hsl(var(--primary))" 
+                strokeWidth={1.5} 
+                dot={false}
+                isAnimationActive={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+          <div className="text-[9px] text-muted-foreground text-center -mt-1">
+            Pool Hashrate (last {hashrateHistory.length} samples)
+          </div>
+        </div>
+      )}
       
       {/* Historical wallet data */}
       <div className="grid grid-cols-2 gap-2 text-[10px] border-t border-muted/30 pt-2">
