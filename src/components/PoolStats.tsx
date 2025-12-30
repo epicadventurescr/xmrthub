@@ -3,7 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 
 const fetchPoolStats = async () => {
-  const response = await fetch("https://supportxmr.com/api/pool/stats");
+  const response = await fetch(
+    `https://corsproxy.io/?${encodeURIComponent("https://supportxmr.com/api/pool/stats")}`,
+    { headers: { accept: "application/json" } }
+  );
   if (!response.ok) {
     throw new Error('Failed to fetch pool stats');
   }
